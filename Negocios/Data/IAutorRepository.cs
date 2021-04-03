@@ -24,33 +24,24 @@ namespace Negocios.Data
         }
         SqlConnection Conn = new SqlConnection(GetDbConnection());
 
-        public List<Autores> ListarAutores()
+        public DataTable ListarAutores()
         {
             Conn.Open();
         
 
             try
             {
-                List<Autores> _listAutores = new List<Autores>();
+                DataTable DtAutores = new DataTable();
 
                 if (Conn.State != System.Data.ConnectionState.Open) Conn.Open();
 
                 SqlCommand objCommand = new SqlCommand("List_Autores", Conn);
                 objCommand.CommandType = CommandType.StoredProcedure;
-                //objCommand.Parameters.AddWithValue("@PageNo", PageNo);
-                SqlDataReader _Reader = objCommand.ExecuteReader();
+               
+                SqlDataAdapter da = new SqlDataAdapter(objCommand);
+                da.Fill(DtAutores);
 
-                while (_Reader.Read())
-                {
-                    Autores aut = new Autores();
-                    aut.Id = Convert.ToInt32(_Reader["Id"]);
-                    aut.Nombre = _Reader["Nombre"].ToString();
-                    aut.Id_Ciudad = Convert.ToInt32(_Reader["Id_Ciudad"]);
-                    aut.Sexo = _Reader["Sexo"].ToString();
-                    _listAutores.Add(aut);
-                }
-
-                return _listAutores;
+                return DtAutores;
             }
             catch
             {
@@ -68,6 +59,7 @@ namespace Negocios.Data
                 }
             }
         }
+      
 
         public Int32 InsertAutores(Autores objAutor)
         {
@@ -187,7 +179,7 @@ namespace Negocios.Data
             }
             catch
             {
-                throw;
+                return -1;
             }
             finally
             {

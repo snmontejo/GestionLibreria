@@ -1,0 +1,82 @@
+﻿<Window x:Class="GestionLibreria.Libros"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GestionLibreria"
+        mc:Ignorable="d"
+        Title="Libros" Height="450" Width="800" WindowState="Maximized">
+    <Grid>
+        <StackPanel>
+            <GroupBox Header="Registro Libros" Margin="10">
+                <Grid Height="150">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Nombre" HorizontalAlignment="Left" 
+                       VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtNombre" Height="27" 
+                       Margin="5"  Width="300" HorizontalAlignment="Left"/>
+                    <Label Content="Fecha Escritura" HorizontalAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Row="1" Grid.Column="0"/>
+                    <DatePicker Name="dtpFechaEscritura"    Height="27"    Grid.Column="1" Margin="5,37,363,1" Grid.RowSpan="2" >
+                        <UIElement.RenderTransform>
+                            <MatrixTransform/>
+                        </UIElement.RenderTransform>
+
+                    </DatePicker>
+                    <Label Content="Costo" HorizontalAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Row="2" Grid.Column="0"/>
+                    <TextBox Name="txtCosto"  Grid.Row="1"  Height="27"  Grid.Column="1" Margin="5,37,363,1" Grid.RowSpan="2">
+                    </TextBox>
+                    <Label Content="Autor" HorizontalAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Row="3" Grid.Column="0" />
+                    <ComboBox Name="cbxAutores"  DisplayMemberPath="Nombre" SelectedValuePath="Id"
+    SelectedValue="{Binding Path=Nombre}" IsEditable="True" Grid.Row="3" Grid.Column="1"  Height="27"
+                       Margin="5"  Width="300" HorizontalAlignment="Left">
+                        
+                    </ComboBox>
+                </Grid>
+            </GroupBox>
+            <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="btnGuardar" Content="Guardar" Height="30" Width="80" Click="btnGuardar_Click"/>
+                <Button x:Name="btnCancelar" Content="Cancelar" Height="30" Width="80" Margin="5,0,10,0" Click="btnCancelar_Click"/>
+            </StackPanel>
+            <StackPanel>
+                <DataGrid Margin="10" Name="gvLibros" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Header="Nombre" Width="120" Binding="{Binding Nombre}" />
+
+                        <DataGridTextColumn Header="FechaEscritura" Width="150" Binding="{Binding FechaEscritura , StringFormat='dd/MM/yyyy'}" />
+                        <DataGridTextColumn Header="Costo" Width="150" Binding="{Binding Costo}" />
+                        <DataGridTextColumn Header="Autor" Width="150" Binding="{Binding Autor}" />
+                        <DataGridTemplateColumn Width="80">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Seleccionar" x:Name="BtnEditar" 
+                                        Click="BtnEditar_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="50">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Eliminar" x:Name="btnEliminar"
+                                        Click="btnEliminar_Click" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

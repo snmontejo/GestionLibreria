@@ -24,33 +24,24 @@ namespace Negocios.Data
         }
         SqlConnection Conn = new SqlConnection(GetDbConnection());
 
-        public List<Libros> ListarLibros()
+        public DataTable ListarLibros()
         {
             Conn.Open();
 
 
             try
             {
-                List<Libros> _listLibros = new List<Libros>();
+                DataTable DtLibros = new DataTable();
 
                 if (Conn.State != System.Data.ConnectionState.Open) Conn.Open();
 
                 SqlCommand objCommand = new SqlCommand("List_Libros", Conn);
                 objCommand.CommandType = CommandType.StoredProcedure;
-                //objCommand.Parameters.AddWithValue("@PageNo", PageNo);
-                SqlDataReader _Reader = objCommand.ExecuteReader();
 
-                while (_Reader.Read())
-                {
-                    Libros lib = new Libros();
-                    lib.Id = Convert.ToInt32(_Reader["Id"]);
-                    lib.Nombre = _Reader["Nombre"].ToString();
-                    lib.FechaEscritura = Convert.ToDateTime(_Reader["FechaEscritura"]);
-                    //aut.Autor = _Reader["Sexo"].ToString();
-                    _listLibros.Add(lib);
-                }
+                SqlDataAdapter da = new SqlDataAdapter(objCommand);
+                da.Fill(DtLibros);
 
-                return _listLibros;
+                return DtLibros;
             }
             catch
             {
@@ -80,12 +71,12 @@ namespace Negocios.Data
             {
                 if (Conn.State != System.Data.ConnectionState.Open) Conn.Open();
 
-                SqlCommand objCommand = new SqlCommand("CreateLibro", Conn);
+                SqlCommand objCommand = new SqlCommand("CreateLibros", Conn);
                 objCommand.CommandType = CommandType.StoredProcedure;
                 objCommand.Parameters.AddWithValue("@Nombre", objLibr.Nombre);
                 objCommand.Parameters.AddWithValue("@FechaEscritura", objLibr.FechaEscritura);
                 objCommand.Parameters.AddWithValue("@Costo", objLibr.Costo);
-                objCommand.Parameters.AddWithValue("@Id_Autor", objLibr.Autor.Id);
+                objCommand.Parameters.AddWithValue("@Id_Autor", objLibr.Id_Autor);
 
                 result = Convert.ToInt32(objCommand.ExecuteScalar());
 
@@ -126,13 +117,13 @@ namespace Negocios.Data
             {
                 if (Conn.State != System.Data.ConnectionState.Open) Conn.Open();
 
-                SqlCommand objCommand = new SqlCommand("UpdateLibro", Conn);
+                SqlCommand objCommand = new SqlCommand("UpdateLibros", Conn);
                 objCommand.CommandType = CommandType.StoredProcedure;
                 objCommand.Parameters.AddWithValue("@Id", objLibr.Id);
                 objCommand.Parameters.AddWithValue("@Nombre", objLibr.Nombre);
                 objCommand.Parameters.AddWithValue("@FechaEscritura", objLibr.FechaEscritura);
                 objCommand.Parameters.AddWithValue("@Costo", objLibr.Costo);
-                objCommand.Parameters.AddWithValue("@Id_Autor", objLibr.Autor.Id);
+                objCommand.Parameters.AddWithValue("@Id_Autor", objLibr.Id_Autor);
 
                 result = Convert.ToInt32(objCommand.ExecuteScalar());
 

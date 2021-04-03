@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GestionLibreria"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800" WindowState="Maximized">
     <Grid>
-
+        <Menu Height="27" HorizontalAlignment="Left" Name="menu1" VerticalAlignment="Top" Width="503" >
+            <MenuItem Header="Autores" >
+                <MenuItem Header="Listar"  Click="ListarAutoresItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="Libros">
+                <MenuItem Header="Listar"  Click="ListarLibros_Click"/>
+            </MenuItem>
+        </Menu>
     </Grid>
 </Window>

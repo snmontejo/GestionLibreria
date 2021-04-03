@@ -13,6 +13,6 @@ namespace Negocios.Models
         public string Nombre { get; set; }
         public DateTime FechaEscritura { get; set; }
         public double Costo { get; set; }
-        public Autores Autor { get; set; }
+        public int Id_Autor { get; set; }
     }
 }

@@ -24,5 +24,17 @@ namespace GestionLibreria
         {
             InitializeComponent();
         }
+
+        private void ListarAutoresItem_Click(object sender, RoutedEventArgs e)
+        {
+            Autores form = new Autores();
+            form.ShowDialog();
+        }
+        private void ListarLibros_Click(object sender, RoutedEventArgs e)
+        {
+            Libros form = new Libros();
+            form.ShowDialog();
+        }
+
     }
 }

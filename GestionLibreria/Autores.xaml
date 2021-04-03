@@ -1,0 +1,91 @@
+﻿<Window x:Class="GestionLibreria.Autores"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:GestionLibreria"
+        mc:Ignorable="d"
+        Title="Autores" Height="450" Width="800" WindowState="Maximized" >
+    <Grid>
+        <StackPanel>
+            <GroupBox Header="Registro Autores" Margin="10">
+                <Grid Height="150">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Nombre" HorizontalAlignment="Left" 
+                       VerticalContentAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="txtNombre" Height="27" 
+                       Margin="5"  Width="300" HorizontalAlignment="Left"/>
+                    <Label Content="Nacionalidad" HorizontalAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Row="1" Grid.Column="0"/>
+                    <ComboBox Name="cbxNacionalidad"  DisplayMemberPath="Descripcion" Height="27"   SelectedValuePath="Id"
+    SelectedValue="{Binding Path=Descripcion}" IsEditable="True" Grid.Column="1" Margin="5,37,363,1" Grid.RowSpan="2" SelectionChanged="cbxNacionalidad_SelectedChanged">
+                        <UIElement.RenderTransform>
+                            <MatrixTransform/>
+                        </UIElement.RenderTransform>
+                        
+                    </ComboBox>
+                    <Label Content="Ciudad" HorizontalAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Row="2" Grid.Column="0"/>
+                    <ComboBox Name="cbxCiudad"  Grid.Row="1"  Height="27" DisplayMemberPath="Descripcion"   SelectedValuePath="Id"
+    SelectedValue="{Binding Path=Descripcion}" IsEditable="True" Grid.Column="1" Margin="5,37,363,1" Grid.RowSpan="2">
+                        <UIElement.RenderTransform>
+                            <MatrixTransform/>
+                        </UIElement.RenderTransform>
+
+                    </ComboBox>
+                    <Label Content="Sexo" HorizontalAlignment="Left" VerticalContentAlignment="Center" 
+                       Grid.Row="3" Grid.Column="0" />
+                    <ComboBox Name="cbxSexo" Grid.Row="3" Grid.Column="1"  Height="27"
+                       Margin="5"  SelectedValuePath="Tag" Width="300" HorizontalAlignment="Left">
+                        <ComboBoxItem Content="Femenino" Tag="F"  />
+                        <ComboBoxItem Content="Masculino" Tag="M" />
+                    </ComboBox>
+                </Grid>
+            </GroupBox>
+            <StackPanel Height="40" Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button x:Name="btnGuardar" Content="Guardar" Height="30" Width="80" Click="btnGuardar_Click"/>
+                <Button x:Name="btnCancelar" Content="Cancelar" Height="30" Width="80" Margin="5,0,10,0" Click="btnCancelar_Click"/>
+            </StackPanel>
+            <StackPanel>
+                <DataGrid Margin="10" Name="gvAutores" AutoGenerateColumns="False">
+                    <DataGrid.Columns>
+
+                        <DataGridTextColumn Header="Nombre" Width="120" Binding="{Binding Nombre}" />
+                       
+                        <DataGridTextColumn Header="Sexo" Width="150" Binding="{Binding Sexo}" />
+                        <DataGridTextColumn Header="Nacionalidad" Width="150" Binding="{Binding Nacionalidad}" />
+                        <DataGridTextColumn Header="Nro. Libros" Width="150" Binding="{Binding NroLibros}" />
+                        
+                        <DataGridTemplateColumn Width="80">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Seleccionar" x:Name="BtnEditar" 
+                                        Click="BtnEditar_Click"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Width="50">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button Content="Eliminar" x:Name="btnEliminar"
+                                        Click="btnEliminar_Click" />
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </StackPanel>
+        </StackPanel>
+       
+    </Grid>
+
+</Window>

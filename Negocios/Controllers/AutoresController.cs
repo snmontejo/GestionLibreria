@@ -1,106 +1,42 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Negocios.Contexts;
 using Negocios.Data;
 using Negocios.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Negocios.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AutoresController : Controller
+    public class AutoresController : ControllerBase
     {
-        
 
-        // GET: AutoresController
-        public ActionResult Index()
-        {
-            return View();
-        }
 
-        // GET: AutoresController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: AutoresController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: AutoresController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AutoresController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: AutoresController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: AutoresController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: AutoresController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: api/Autores?RowCount=5  
+        // GET: /Autores/ListarAutores  
         [HttpGet]
-        public IEnumerable<Autores> GetAutores()
+        [Route("ListarAutores")]
+        public string  ListarAutores()
         {
             try
             {
 
                 IAutorRepository ListAut = new IAutorRepository();
-                List<Autores> modelAutores = ListAut.ListarAutores();
-                return modelAutores;
+                DataTable modelAutores = ListAut.ListarAutores();
+                // return modelAutores;
+               // return modelAutores;
+
+                string JSONString = string.Empty;
+                JSONString = JsonConvert.SerializeObject(modelAutores);
+                return JSONString;
+
+
             }
             catch
             {
@@ -108,8 +44,9 @@ namespace Negocios.Controllers
             }
         }
 
-        [HttpPost]        
-        public string CreateAutor(Autores objAutor)
+        [HttpPost]
+        [Route("CreateAutor")]
+        public string CreateAutor([FromBody] Autores objAutor)
         {
             try
             {
@@ -130,8 +67,8 @@ namespace Negocios.Controllers
         }
 
         [HttpPost]
-        // [ResponseType(typeof(tblCustomer))]
-        public string EditaLibro(Autores objAut)
+        [Route("EditarAutor")]
+        public string EditarAutor(Autores objAut)
         {
             try
             {
@@ -149,7 +86,8 @@ namespace Negocios.Controllers
         }
 
         [HttpDelete]
-        public string Delete(long? id)
+        [Route("BorrarAutor")]
+        public string BorrarAutor(long? id)
         {
             try
             {
